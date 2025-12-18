@@ -44,7 +44,7 @@ AMBIGUOUS_FREQ = 10  # Frequency of ambiguous situations (0 = disabled)
 # You can modify these to test evolution against different opponent strategies
 OPPONENT_ALPHA = 0.1  # Opponent's learning rate
 OPPONENT_BETA = 3.0  # Opponent's temperature
-OPPONENT_TRUST = 0.5  # Opponent's trust score
+OPPONENT_TRUST = 0.8  # Opponent's trust score
 
 # =============================================================================
 # GAME SCENARIO
