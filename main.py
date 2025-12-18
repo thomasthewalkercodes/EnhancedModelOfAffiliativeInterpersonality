@@ -7,10 +7,10 @@ This simulates two agents learning to interact using Q-learning,
 where each agent can choose to Approach (friendly) or Avoid (distance).
 """
 
-from matrices import get_scenario
-from nash_calc import solve_nash, print_game_info
-from q_learning import simulate
-from plotting import plot_probabilities
+from Matrices import get_scenario
+from Nash_Calc import solve_nash, print_game_info
+from QLearning import simulate
+from Plotting import plot_probabilities
 
 # =============================================================================
 # PARAMETERS - Modify these to control the simulation
@@ -28,7 +28,7 @@ ROUNDS = 300  # Number of interaction rounds
 #   - "double": Two Nash equilibria (bistable - converges to one of two attractors)
 #   - "single": One Nash equilibrium (globally stable - always converges to same point)
 #   - "circular": No pure Nash (cyclical dynamics - oscillates)
-SCENARIO = "double"
+SCENARIO = "circular"
 
 # Output
 SAVE_PLOT = True  # Whether to save the plot
