@@ -16,9 +16,9 @@ from Plotting import plot_probabilities
 # PARAMETERS - Modify these to control the simulation
 # =============================================================================
 
-# Learning parameters
-ALPHA = 0.1  # Learning rate (0 to 1)
-BETA = 3.0  # Softmax temperature (higher = more exploitation)
+# Learningparameters
+ALPHA = 0.1  # Learning rate (0 to 1) (0.1 for normali-ish, deterministic)
+BETA = 1  # Softmax temperature (higher = more exploitation) (3 more normal-ish, deterministic)
 
 # Simulation parameters
 ROUNDS = 300  # Number of interaction rounds
@@ -28,7 +28,7 @@ ROUNDS = 300  # Number of interaction rounds
 #   - "double": Two Nash equilibria (bistable - converges to one of two attractors)
 #   - "single": One Nash equilibrium (globally stable - always converges to same point)
 #   - "circular": No pure Nash (cyclical dynamics - oscillates)
-SCENARIO = "circular"
+SCENARIO = "single"
 
 # Output
 SAVE_PLOT = True  # Whether to save the plot
