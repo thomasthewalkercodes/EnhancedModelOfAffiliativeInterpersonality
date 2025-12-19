@@ -17,8 +17,8 @@ from Plotting import plot_probabilities
 # =============================================================================
 
 # Learningparameters
-ALPHA = 0.8  # Learning rate (0 to 1) (0.1 for normali-ish, deterministic)
-BETA = 4  # Softmax temperature (higher = more exploitation) (3 more normal-ish, deterministic)
+ALPHA = 0.5  # Learning rate (0 to 1) (0.1 for normali-ish, deterministic)
+BETA = 2.5  # Softmax temperature (higher = more exploitation) (3 more normal-ish, deterministic)
 
 # Simulation parameters
 ROUNDS = 500  # Number of interaction rounds
@@ -44,6 +44,9 @@ if __name__ == "__main__":
 
     # Calculate Nash equilibrium and print game info
     p_init, q_init = print_game_info(A1, A2, SCENARIO)
+    # if you want to skip the nash calc
+    p_init = 0.5
+    q_init = 0
 
     print(f"\nSimulation Parameters:")
     print(f"  Alpha (learning rate): {ALPHA}")

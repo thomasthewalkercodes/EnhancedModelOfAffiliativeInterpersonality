@@ -34,6 +34,7 @@ class GeneticEvolution:
         mutation_rate,
         rounds_per_match,
         ambiguous_freq,
+        matches_per_evaluation,
         A1, A2,
         p_init, q_init,
         opponent_alpha,
@@ -51,6 +52,7 @@ class GeneticEvolution:
             mutation_rate: How much parameters mutate (0 to 1)
             rounds_per_match: How many rounds each agent plays against opponent
             ambiguous_freq: Frequency of ambiguous situations
+            matches_per_evaluation: How many matches each agent plays (mean is used for fitness)
             A1, A2: Payoff matrices
             p_init, q_init: Initial probabilities from Nash equilibrium
             opponent_alpha, opponent_beta, opponent_trust: Fixed opponent parameters
@@ -62,6 +64,7 @@ class GeneticEvolution:
         self.mutation_rate = mutation_rate
         self.rounds_per_match = rounds_per_match
         self.ambiguous_freq = ambiguous_freq
+        self.matches_per_evaluation = matches_per_evaluation
 
         self.A1 = A1
         self.A2 = A2
@@ -94,26 +97,34 @@ class GeneticEvolution:
 
     def evaluate_agent(self, agent):
         """
-        Evaluate an agent by having it play against the fixed opponent.
+        Evaluate an agent by having it play multiple matches against the fixed opponent.
 
         The agent plays as Agent1, opponent plays as Agent2.
-        Agent accumulates fitness = total points earned.
+        Each agent plays multiple matches and the mean score is used for fitness.
+        This reduces variance and provides more robust evaluation.
         """
-        result = simulate_ambiguous(
-            self.A1, self.A2,
-            self.p_init, self.q_init,
-            agent.alpha, agent.beta,
-            self.opponent_alpha, self.opponent_beta,
-            agent.trust, self.opponent_trust,
-            self.ambiguous_freq,
-            self.rounds_per_match
-        )
+        match_scores = []
 
-        # Fitness = total points accumulated
-        total_points = np.sum(result["payoff_history1"])
-        agent.add_fitness(total_points)
+        for _ in range(self.matches_per_evaluation):
+            result = simulate_ambiguous(
+                self.A1, self.A2,
+                self.p_init, self.q_init,
+                agent.alpha, agent.beta,
+                self.opponent_alpha, self.opponent_beta,
+                agent.trust, self.opponent_trust,
+                self.ambiguous_freq,
+                self.rounds_per_match
+            )
 
-        return total_points
+            # Total points from this match
+            total_points = np.sum(result["payoff_history1"])
+            match_scores.append(total_points)
+
+        # Fitness = mean of all matches
+        mean_fitness = np.mean(match_scores)
+        agent.add_fitness(mean_fitness)
+
+        return mean_fitness
 
     def evaluate_generation(self, generation_num):
         """Evaluate all agents in the current generation."""
@@ -195,12 +206,13 @@ class GeneticEvolution:
         print("STARTING GENETIC EVOLUTION")
         print("="*70)
         print(f"\nParameters:")
-        print(f"  Population size:    {self.population_size}")
-        print(f"  Generations:        {self.num_generations}")
-        print(f"  Selection rate:     {self.selection_rate} ({self.num_survivors} survivors)")
-        print(f"  Mutation rate:      {self.mutation_rate}")
-        print(f"  Rounds per match:   {self.rounds_per_match}")
-        print(f"  Ambiguous freq:     {self.ambiguous_freq}")
+        print(f"  Population size:      {self.population_size}")
+        print(f"  Generations:          {self.num_generations}")
+        print(f"  Selection rate:       {self.selection_rate} ({self.num_survivors} survivors)")
+        print(f"  Mutation rate:        {self.mutation_rate}")
+        print(f"  Matches per agent:    {self.matches_per_evaluation}")
+        print(f"  Rounds per match:     {self.rounds_per_match}")
+        print(f"  Ambiguous freq:       {self.ambiguous_freq}")
         print(f"\nOpponent parameters:")
         print(f"  Alpha: {self.opponent_alpha}")
         print(f"  Beta:  {self.opponent_beta}")

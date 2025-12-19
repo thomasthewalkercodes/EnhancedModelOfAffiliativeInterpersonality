@@ -23,13 +23,13 @@ def get_scenario(name):
         # Nash at (Approach, Approach) and (Avoid, Avoid)
         A1 = np.array(
             [
-                [2, 0],  # Approach: 3 if other approaches, 0 if other avoids
+                [3, 0],  # Approach: 3 if other approaches, 0 if other avoids
                 [0, 2],  # Avoid: 0 if other approaches, 2 if other avoids
             ]
         )
         A2 = np.array(
             [
-                [2, 0],  # Approach: 3 if other approaches, 0 if other avoids
+                [3, 0],  # Approach: 3 if other approaches, 0 if other avoids
                 [0, 2],  # Avoid: 0 if other approaches, 2 if other avoids
             ]
         )

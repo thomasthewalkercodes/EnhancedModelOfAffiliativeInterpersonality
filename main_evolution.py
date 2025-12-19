@@ -25,15 +25,19 @@ from GeneticEvolution import GeneticEvolution
 
 # Population settings
 POPULATION_SIZE = 50  # Number of agents per generation (larger = more diverse)
-NUM_GENERATIONS = 20  # How many generations to evolve (more = better convergence)
+NUM_GENERATIONS = 5  # How many generations to evolve (more = better convergence)
 
 # Selection and mutation
 SELECTION_RATE = 0.2  # Top 20% survive to next generation (0.1 to 0.5 typical)
 MUTATION_RATE = 0.1  # How much parameters mutate (0.05 = small, 0.2 = large)
 
 # Match settings
+# IMPORTANT: Each agent plays MATCHES_PER_EVALUATION matches, and the MEAN fitness
+# across all matches is used for selection. This reduces random variance and provides
+# more robust evaluation. Higher values = more accurate but slower evolution.
+MATCHES_PER_EVALUATION = 10  # How many matches each agent plays (mean is used for fitness)
 ROUNDS_PER_MATCH = (
-    200  # How many rounds each agent plays (more = more accurate fitness)
+    300  # How many rounds in each match (more = more accurate fitness)
 )
 AMBIGUOUS_FREQ = 10  # Frequency of ambiguous situations (0 = disabled)
 
@@ -42,9 +46,9 @@ AMBIGUOUS_FREQ = 10  # Frequency of ambiguous situations (0 = disabled)
 # =============================================================================
 
 # You can modify these to test evolution against different opponent strategies
-OPPONENT_ALPHA = 0.1  # Opponent's learning rate
-OPPONENT_BETA = 3.0  # Opponent's temperature
-OPPONENT_TRUST = 0.8  # Opponent's trust score
+OPPONENT_ALPHA = 0.8  # Opponent's learning rate
+OPPONENT_BETA = 5.0  # Opponent's temperature
+OPPONENT_TRUST = 0  # Opponent's trust score
 
 # =============================================================================
 # GAME SCENARIO
@@ -74,6 +78,9 @@ if __name__ == "__main__":
 
     # Calculate Nash equilibrium and print game info
     p_init, q_init = print_game_info(A1, A2, SCENARIO)
+    # if you want to skip the nash calc
+    p_init = 0.5
+    q_init = 0
 
     # Create genetic evolution system
     evolution = GeneticEvolution(
@@ -83,6 +90,7 @@ if __name__ == "__main__":
         mutation_rate=MUTATION_RATE,
         rounds_per_match=ROUNDS_PER_MATCH,
         ambiguous_freq=AMBIGUOUS_FREQ,
+        matches_per_evaluation=MATCHES_PER_EVALUATION,
         A1=A1,
         A2=A2,
         p_init=p_init,
