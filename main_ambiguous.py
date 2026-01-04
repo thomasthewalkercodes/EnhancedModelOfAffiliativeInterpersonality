@@ -24,14 +24,14 @@ BETA1 = 3  # Temperature for Agent1 (higher = more exploitation)
 
 # Individual learning parameters for Agent 2
 ALPHA2 = 0.8  # Learning rate for Agent2 (0 to 1) - how quickly Agent2 learns
-BETA2 = 5.0  # Temperature for Agent2 (higher = more exploitation)
+BETA2 = 5  # Temperature for Agent2 (higher = more exploitation)
 
 # Trust parameters (0 to 1)
 # Trust determines how agents interpret ambiguous situations:
 #   1.0 = Full trust - always assume the other is being friendly (Approach)
 #   0.5 = Neutral - 50/50 interpretation
 #   0.0 = No trust - always assume the other is being hostile (Avoid)
-TRUST1 = 0.7  # Agent1's trust in Agent2
+TRUST1 = 1  # Agent1's trust in Agent2
 TRUST2 = 0  # Agent2's trust in Agent1
 
 # Ambiguous situation frequency
@@ -40,7 +40,7 @@ TRUST2 = 0  # Agent2's trust in Agent1
 AMBIGUOUS_FREQ = 10  # Ambiguous situation every X rounds (0 = disabled)
 
 # Simulation parameters
-ROUNDS = 1000  # Number of interaction rounds
+ROUNDS = 300  # Number of interaction rounds
 
 # Scenario selection
 # Options: "double", "single", "circular"
