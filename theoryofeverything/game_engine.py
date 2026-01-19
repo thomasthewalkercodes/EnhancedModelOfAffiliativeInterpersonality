@@ -1,5 +1,5 @@
 """
-Q-Learning simulation for two agents in a 2x2 game.
+Q-Learning simulation for two agents in an n x n game.
 """
 
 import numpy as np
@@ -10,30 +10,23 @@ def softmax_policy(Q, beta):
     Softmax action selection.
     Returns probability distribution over all actions.
     """
-    exp_Q = np.exp(beta * Q)
+    # Numerical stability: subtract max before exp to avoid overflow
+    scaled_Q = beta * Q
+    max_Q = np.max(scaled_Q)
+    exp_Q = np.exp(scaled_Q - max_Q)
     return exp_Q / np.sum(exp_Q)
 
 
-def simulate(A1, A2, p_init, q_init, alpha, beta, rounds):
-    """
-    Simulate repeated interactions using Q-learning.
+def simulation(P1, P2, l_rate, e_rate, rounds):
 
-    Args:
-        A1, A2: Payoff matrices (n x n)
-        p_init, q_init: Initial probabilities (not used in n-action case)
-        alpha: Learning rate
-        beta: Softmax temperature (higher = more exploitation)
-        rounds: Number of rounds
+    n_actions = P1.shape[0]  # Number of actions
 
-    Returns:
-        dict with histories of probabilities, actions, payoffs
-    """
-
-    n_actions = A1.shape[0]
-
-    # Initialize Q-values to 0
+    # Initialize Q-values to 0 (standard Q-learning initialization)
     Q1 = np.zeros(n_actions)
     Q2 = np.zeros(n_actions)
+
+    # But if p_init and q_init are provided as arrays or something, use them
+    # For simplicity, assume they are scalars and distribute
 
     # History storage
     p_history = np.zeros((rounds, n_actions))
@@ -43,9 +36,12 @@ def simulate(A1, A2, p_init, q_init, alpha, beta, rounds):
     payoff_history1 = np.zeros(rounds)
     payoff_history2 = np.zeros(rounds)
 
-    # Set initial values - uniform
+    # Set initial values - uniform for all actions
     p_history[0] = np.full(n_actions, 1.0 / n_actions)
     q_history[0] = np.full(n_actions, 1.0 / n_actions)
+
+    alpha = l_rate  # learning rate
+    beta = e_rate  # temperature
 
     for t in range(1, rounds):
         # Calculate action probabilities using softmax
@@ -56,7 +52,7 @@ def simulate(A1, A2, p_init, q_init, alpha, beta, rounds):
         p_history[t] = p_probs
         q_history[t] = q_probs
 
-        # Choose actions
+        # Choose actions based on probabilities
         action1 = np.random.choice(n_actions, p=p_probs)
         action2 = np.random.choice(n_actions, p=q_probs)
 
@@ -64,8 +60,8 @@ def simulate(A1, A2, p_init, q_init, alpha, beta, rounds):
         action_history2[t] = action2
 
         # Get payoffs
-        payoff1 = A1[action1, action2]
-        payoff2 = A2[action1, action2]
+        payoff1 = P1[action1, action2]
+        payoff2 = P2[action1, action2]
 
         payoff_history1[t] = payoff1
         payoff_history2[t] = payoff2

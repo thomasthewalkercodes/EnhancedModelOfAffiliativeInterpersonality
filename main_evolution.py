@@ -25,7 +25,7 @@ from GeneticEvolution import GeneticEvolution
 
 # Population settings
 POPULATION_SIZE = 50  # Number of agents per generation (larger = more diverse)
-NUM_GENERATIONS = 5  # How many generations to evolve (more = better convergence)
+NUM_GENERATIONS = 10  # How many generations to evolve (more = better convergence)
 
 # Selection and mutation
 SELECTION_RATE = 0.2  # Top 20% survive to next generation (0.1 to 0.5 typical)
@@ -35,10 +35,10 @@ MUTATION_RATE = 0.1  # How much parameters mutate (0.05 = small, 0.2 = large)
 # IMPORTANT: Each agent plays MATCHES_PER_EVALUATION matches, and the MEAN fitness
 # across all matches is used for selection. This reduces random variance and provides
 # more robust evaluation. Higher values = more accurate but slower evolution.
-MATCHES_PER_EVALUATION = 10  # How many matches each agent plays (mean is used for fitness)
-ROUNDS_PER_MATCH = (
-    300  # How many rounds in each match (more = more accurate fitness)
+MATCHES_PER_EVALUATION = (
+    10  # How many matches each agent plays (mean is used for fitness)
 )
+ROUNDS_PER_MATCH = 1000  # How many rounds in each match (more = more accurate fitness)
 AMBIGUOUS_FREQ = 10  # Frequency of ambiguous situations (0 = disabled)
 
 # =============================================================================
@@ -46,9 +46,9 @@ AMBIGUOUS_FREQ = 10  # Frequency of ambiguous situations (0 = disabled)
 # =============================================================================
 
 # You can modify these to test evolution against different opponent strategies
-OPPONENT_ALPHA = 0.8  # Opponent's learning rate
+OPPONENT_ALPHA = 0.1  # Opponent's learning rate
 OPPONENT_BETA = 5.0  # Opponent's temperature
-OPPONENT_TRUST = 0  # Opponent's trust score
+OPPONENT_TRUST = 1  # Opponent's trust score
 
 # =============================================================================
 # GAME SCENARIO

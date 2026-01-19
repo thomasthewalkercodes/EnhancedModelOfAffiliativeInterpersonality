@@ -21,16 +21,16 @@ from AmbiguousQLearning import simulate_ambiguous
 NUM_SIMULATIONS = 100
 
 # Individual learning parameters for Agent 1
-ALPHA1 = 0.8  # Learning rate for Agent1 (0 to 1)
-BETA1 = 5  # Temperature for Agent1 (higher = more exploitation)
+ALPHA1 = 0.1  # Learning rate for Agent1 (0 to 1)
+BETA1 = 3  # Temperature for Agent1 (higher = more exploitation)
 
 # Individual learning parameters for Agent 2
-ALPHA2 = 0.1  # Learning rate for Agent2 (0 to 1)
-BETA2 = 3  # Temperature for Agent2 (higher = more exploitation)
+ALPHA2 = 2  # Learning rate for Agent2 (0 to 1)
+BETA2 = 6  # Temperature for Agent2 (higher = more exploitation)
 
 # Trust parameters (0 to 1)
 TRUST1 = 0  # Agent1's trust in Agent2
-TRUST2 = 0.8  # Agent2's trust in Agent1
+TRUST2 = 0  # Agent2's trust in Agent1
 
 # Ambiguous situation frequency
 AMBIGUOUS_FREQ = 10  # Ambiguous situation every X rounds (0 = disabled)

@@ -19,20 +19,20 @@ from Plotting import plot_probabilities
 # =============================================================================
 
 # Individual learning parameters for Agent 1
-ALPHA1 = 0.1  # Learning rate for Agent1 (0 to 1) - how quickly Agent1 learns
-BETA1 = 3  # Temperature for Agent1 (higher = more exploitation)
+ALPHA1 = 0.8  # Learning rate for Agent1 (0 to 1) - how quickly Agent1 learns
+BETA1 = 5  # Temperature for Agent1 (higher = more exploitation)
 
 # Individual learning parameters for Agent 2
-ALPHA2 = 0.8  # Learning rate for Agent2 (0 to 1) - how quickly Agent2 learns
-BETA2 = 5  # Temperature for Agent2 (higher = more exploitation)
+ALPHA2 = 2  # Learning rate for Agent2 (0 to 1) - how quickly Agent2 learns
+BETA2 = 3  # Temperature for Agent2 (higher = more exploitation)
 
 # Trust parameters (0 to 1)
 # Trust determines how agents interpret ambiguous situations:
 #   1.0 = Full trust - always assume the other is being friendly (Approach)
 #   0.5 = Neutral - 50/50 interpretation
 #   0.0 = No trust - always assume the other is being hostile (Avoid)
-TRUST1 = 1  # Agent1's trust in Agent2
-TRUST2 = 0  # Agent2's trust in Agent1
+TRUST1 = 0  # Agent1's trust in Agent2
+TRUST2 = 0.7  # Agent2's trust in Agent1
 
 # Ambiguous situation frequency
 # Every X rounds, an ambiguous situation occurs where agents can't see each other's actions

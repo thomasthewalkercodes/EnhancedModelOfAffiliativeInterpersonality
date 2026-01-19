@@ -15,13 +15,13 @@ import numpy as np
 def softmax_policy(Q, beta):
     """
     Softmax action selection.
-    Returns probability of choosing action 0 (Approach).
+    Returns probability distribution over all actions.
     """
     # Numerical stability: subtract max before exp to avoid overflow
     scaled_Q = beta * Q
     max_Q = np.max(scaled_Q)
     exp_Q = np.exp(scaled_Q - max_Q)
-    return exp_Q[0] / np.sum(exp_Q)
+    return exp_Q / np.sum(exp_Q)
 
 
 def interpret_ambiguous_action(trust_score):
@@ -42,13 +42,18 @@ def interpret_ambiguous_action(trust_score):
 
 
 def simulate_ambiguous(
-    A1, A2,
-    p_init, q_init,
-    alpha1, beta1,
-    alpha2, beta2,
-    trust1, trust2,
+    A1,
+    A2,
+    p_init,
+    q_init,
+    alpha1,
+    beta1,
+    alpha2,
+    beta2,
+    trust1,
+    trust2,
     ambiguous_freq,
-    rounds
+    rounds,
 ):
     """
     Simulate repeated interactions with individual parameters and ambiguous situations.
@@ -107,8 +112,12 @@ def simulate_ambiguous(
 
             # Agents can't observe each other's actual actions
             # They interpret based on their trust scores
-            perceived_action2 = interpret_ambiguous_action(trust1)  # A1's interpretation of A2
-            perceived_action1 = interpret_ambiguous_action(trust2)  # A2's interpretation of A1
+            perceived_action2 = interpret_ambiguous_action(
+                trust1
+            )  # A1's interpretation of A2
+            perceived_action1 = interpret_ambiguous_action(
+                trust2
+            )  # A2's interpretation of A1
 
             # Get payoffs based on perceived actions (not actual actions!)
             payoff1 = A1[action1, perceived_action2]
