@@ -61,7 +61,7 @@ def simulation(P1, P2, l_rate, e_rate, rounds):
 
         # Get payoffs
         payoff1 = P1[action1, action2]
-        payoff2 = P2[action1, action2]
+        payoff2 = P2[action2, action1]
 
         payoff_history1[t] = payoff1
         payoff_history2[t] = payoff2

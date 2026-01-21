@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python sam_agent.py:*)",
+      "Bash(python sam_runner.py:*)"
+    ]
+  }
+}

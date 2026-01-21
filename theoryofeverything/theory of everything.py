@@ -6,7 +6,7 @@ from Plotting import plot_probabilities
 from game_engine import simulation
 from different_games import get_type_game
 
-l_rate = 0.5
+l_rate = 0.01
 e_rate = 3
 rounds = 1000
 t_game = "single"
